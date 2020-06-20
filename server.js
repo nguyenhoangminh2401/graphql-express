@@ -22,11 +22,11 @@ mongoose
 const app = express();
 
 // Enable cors
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: process.env.FRONTEND_URL,
+//   credentials: true,
+// };
+// app.use(cors(corsOptions));
 
 // Create a Apollo Server
 const server = createApolloServer(schema, resolvers, models);
@@ -34,6 +34,7 @@ server.applyMiddleware({ app, path: '/graphql' });
 
 // Create http server and add subscriptions to it
 const httpServer = createServer(app);
+server.installSubscriptionHandlers(httpServer);
 
 // Listen to HTTP and WebSocket server
 const PORT = process.env.PORT || process.env.API_PORT;
