@@ -9,7 +9,6 @@ import { ApolloServer } from 'apollo-server-express';
 const checkAuthorization = token => {
   return new Promise(async (resolve, reject) => {
     const authUser = await jwt.verify(token, process.env.SECRET);
-
     if (authUser) {
       resolve(authUser);
     } else {
@@ -35,7 +34,7 @@ export const createApolloServer = (schema, resolvers, models) => {
       }
 
       let authUser;
-      if (req.headers.authorization !== 'null') {
+      if (req.headers.authorization !== '') {
         const user = await checkAuthorization(req.headers['authorization']);
         if (user) {
           authUser = user;
